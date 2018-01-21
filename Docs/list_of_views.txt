@@ -1,0 +1,15 @@
+-News
+-Comments to the news
+-User page
+-formation of registration
+-form of the choice of registration-entry
+-form of the entrance
+-form "Thank you for registering"
+------
+-Новини
+-Коменти до новин
+-Сторінка юзера
+-форма регістрації
+-форма вибору регістрація-вхід
+-форма входу
+-форма "дякуємо за реєстрацію"
