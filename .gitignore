@@ -1,9 +1,9 @@
-/Sweeter/.vs
+Sweeter/.vs
 LICENSE
 README.md
 Docs
-/Sweeter/Sweeter/Data
-/Sweeter/Sweeter/obj
+Sweeter/Sweeter/Data
+Sweeter/Sweeter/obj
 
 # User-specific files
 *.suo
