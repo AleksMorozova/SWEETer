@@ -11,7 +11,7 @@ namespace Sweeter.DataProviders
 {
     public class AccountDataProvider : IAccountDataProvider
     {
-        private readonly string connectionString = "Server=localhost;Database=JayBase;Trusted_Connection=True;";
+        private readonly string connectionString = @"Server=DESKTOP-DGUPQAR\VnHP;Database=JayBase;Trusted_Connection=True;";
 
         private SqlConnection sqlConnection;
 
