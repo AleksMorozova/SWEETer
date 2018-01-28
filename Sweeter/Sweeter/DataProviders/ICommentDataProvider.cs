@@ -5,7 +5,16 @@ using System.Threading.Tasks;
 
 namespace Sweeter.DataProviders
 {
-    interface ICommentDataProvider
+    using Models;
+    using Dapper;
+
+  public  interface ICommentDataProvider
     {
+        Task<IEnumerable<CommentModel>> GetComments();
+
+        Task<CommentModel> GetComment(int id);
+
+        Task AddComment(CommentModel comment);
+        Task UpdateComment(CommentModel comment);
     }
 }
