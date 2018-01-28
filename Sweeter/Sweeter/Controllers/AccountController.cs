@@ -37,9 +37,9 @@ namespace Sweeter.Controllers
            => await this.accountDataProvider.GetAccount(id);
 
         [HttpPost]
-        public async Task Post([FromBody]AccountModel product)
+        public async Task Post([FromBody]AccountModel account)
         {
-            await this.accountDataProvider.AddAccount(product);
+            await this.accountDataProvider.AddAccount(account);
         }
 
 
