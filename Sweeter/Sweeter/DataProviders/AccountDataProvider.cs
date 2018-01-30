@@ -15,52 +15,48 @@ namespace Sweeter.DataProviders
 
         private SqlConnection sqlConnection;
 
-        public async Task AddAccount(AccountModel account)
+        public void AddAccount(AccountModel account)
         {
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                await sqlConnection.OpenAsync();
-                var dynamicParameters = new DynamicParameters();
-                dynamicParameters.Add("@Fullname", account.FullName);
-                dynamicParameters.Add("@Email", account.Email);
-                dynamicParameters.Add("@Password", account.Password);
-                dynamicParameters.Add("@Username", account.Login);
-                dynamicParameters.Add("@Avatar", account.Avatar);
-                await sqlConnection.ExecuteAsync(
-                    "AddAccount",
-                    dynamicParameters,
-                    commandType: System.Data.CommandType.StoredProcedure);
+                sqlConnection.Execute(@"insert into AccountTable(Fullname, Email, Password, Username, Avatar)
+      values (@Fullname, @Email, @Password, @Username, @Avatar);",
+    new { account.FullName, account.Email, account.Password, account.Login, account.Avatar });
+           
             }
 
         }
 
-        public Task DeleteAccount(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<AccountModel> GetAccount(int id)
+        public void DeleteAccount(int id)
         {
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                await sqlConnection.OpenAsync();
-                var dynamicParameters = new DynamicParameters();
-                dynamicParameters.Add("@id", id);
-                return await sqlConnection.QuerySingleOrDefaultAsync<AccountModel>(
-                    "GetAccount",
-                    dynamicParameters,
-                    commandType: System.Data.CommandType.StoredProcedure);
+                sqlConnection.Execute(@"delete from AccountTable where id = @id", id);
             }
         }
 
-        public Task<IEnumerable<AccountModel>> GetAccounts()
+        public AccountModel GetAccount(int id)
         {
-            throw new NotImplementedException();
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                var account = sqlConnection.Query<AccountModel>("select * from AccountTable where Id = @id", id).First();
+                return account;
+            }
         }
 
-        public Task UpdateAccount(AccountModel account)
+        public IEnumerable<AccountModel> GetAccounts()
         {
-            throw new NotImplementedException();
+            var accounts = sqlConnection.Query<AccountModel>("select * from AccountTable").ToList();
+            return accounts;
+        }
+
+        public void UpdateAccount(AccountModel account)
+        {
+          
+
+            sqlConnection.Execute(@"update AccountTable set Fullname=@Fullname, Email=@Email, Password=@Password, Username=@Username, Avatar=@Avatar where ID = @id;",
+              new { account.FullName, account.Email, account.Password, account.Login, account.Avatar, account.IDaccount });
+
         }
     }
 }

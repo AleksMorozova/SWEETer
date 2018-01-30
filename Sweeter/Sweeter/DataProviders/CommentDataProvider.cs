@@ -16,65 +16,48 @@ namespace Sweeter.DataProviders
 
 
 
-        public async Task AddComment(CommentModel comment)
+        public void AddComment(CommentModel comment)
         {
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                await sqlConnection.OpenAsync();
-                var dynamicParameters = new DynamicParameters();
-                dynamicParameters.Add("@IDpost", comment.Post.IDnews);
-                dynamicParameters.Add("@IDauthor", comment.Author.IDaccount);
-
-                dynamicParameters.Add("@Text", comment.Text);
-                dynamicParameters.Add("@LikesNumber", comment.LikesNumber);
-                await sqlConnection.ExecuteAsync(
-                    "AddComment",
-                    dynamicParameters,
-                    commandType: System.Data.CommandType.StoredProcedure);
+                sqlConnection.Execute(@"insert into CommentTable(IDpost, IDauthor,Text, LikesNumber)
+      values (@IDpost, @IDauthor,@Text, @LikesNumber);",
+ new { comment.Post.IDnews, comment.Author.IDaccount, comment.Text, comment.LikesNumber });
             }
         }
 
-        public async Task<CommentModel> GetComment(int id)
+        public CommentModel GetComment(int id)
         {
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                await sqlConnection.OpenAsync();
-                var dynamicParameters = new DynamicParameters();
-                dynamicParameters.Add("@id", id);
-                return await sqlConnection.QuerySingleOrDefaultAsync<CommentModel>(
-                    "GetComment",
-                    dynamicParameters,
-                    commandType: System.Data.CommandType.StoredProcedure);
+                var comment = sqlConnection.Query<CommentModel>("select * from CommentTable where Id = @id", id).First();
+                return comment;
             }
         }
 
-        public async Task<IEnumerable<CommentModel>> GetComments()
+        public IEnumerable<CommentModel> GetComments()
         {
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                await sqlConnection.OpenAsync();
-                return await sqlConnection.QueryAsync<CommentModel>(
-                    "GetComents",
-                    null,
-                    commandType: System.Data.CommandType.StoredProcedure);
+                var comments = sqlConnection.Query<CommentModel>("select * from CommentTable").ToList();
+                return comments;
             }
         }
 
-        public async Task UpdateComment(CommentModel comment)
+        public void UpdateComment(CommentModel comment)
         {
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                await sqlConnection.OpenAsync();
-                var dynamicParameters = new DynamicParameters();
-                dynamicParameters.Add("@IDpost", comment.Post.IDnews);
-                dynamicParameters.Add("@IDauthor", comment.Author.IDaccount);
+                sqlConnection.Execute(@"update CommentTable set IDpost=@IDpost, IDauthor=@IDauthor,Text=@Text, LikesNumber=@LikesNumber where ID = @id;",
+                  new { comment.Post.IDnews,comment.Author.IDaccount,comment.Text,comment.LikesNumber });
+            }
+        }
 
-                dynamicParameters.Add("@Text", comment.Text);
-                dynamicParameters.Add("@LikesNumber", comment.LikesNumber);
-                await sqlConnection.ExecuteAsync(
-                    "UpdateComment",
-                    dynamicParameters,
-                    commandType: System.Data.CommandType.StoredProcedure);
+        public void DeleteComment(int id)
+        {
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Execute(@"delete from CommentTable where id = @id", id);
             }
         }
     }

@@ -10,12 +10,12 @@ namespace Sweeter.DataProviders
  
    public interface IPostDataProvider
     {
-        Task<IEnumerable<PostsModel>> GetPosts();
+        IEnumerable<PostsModel> GetPosts();
 
-        Task<PostsModel> GetPost(int id);
-
-        Task AddPost(PostsModel post);
-        Task UpdatePost(PostsModel post);
+        PostsModel GetPost(int id);
+        void DeletePost(int id);
+     void AddPost(PostsModel post);
+       void UpdatePost(PostsModel post);
 
 
     }

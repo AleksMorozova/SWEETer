@@ -10,14 +10,14 @@ namespace Sweeter.DataProviders
    public interface IAccountDataProvider
     {
         
-        Task<IEnumerable<AccountModel>> GetAccounts();
+        IEnumerable<AccountModel> GetAccounts();
 
-        Task<AccountModel> GetAccount(int id);
+        AccountModel GetAccount(int id);
 
-        Task AddAccount(AccountModel account);
+        void AddAccount(AccountModel account);
 
-        Task UpdateAccount(AccountModel account);
+        void UpdateAccount(AccountModel account);
 
-        Task DeleteAccount(int id);
+        void DeleteAccount(int id);
     }
 }

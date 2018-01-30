@@ -16,65 +16,51 @@ namespace Sweeter.DataProviders
 
        
 
-        public async Task AddPost(PostsModel post)
+        public void AddPost(PostsModel post)
+        {
+            post.PublicDate = DateTime.Now;
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Execute(@"insert into PostsTable(IDauthor,Text,PublicDate, LikesNumber, CommentNumber)
+      values (@IDauthor,@Text,@PublicDate, @LikesNumber, @CommentNumber);",
+   new { post.Author.IDaccount, post.Text, post.PublicDate, post.LikesNumber, post.CommentsNumber });
+             
+            }
+        }
+        public void DeletePost(int id)
         {
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                await sqlConnection.OpenAsync();
-                var dynamicParameters = new DynamicParameters();
-                dynamicParameters.Add("@IDauthor", post.Author.IDaccount);
-                dynamicParameters.Add("@Text", post.Text);
+                sqlConnection.Execute(@"delete from PostsTable where id = @id", id);
+            }
+        }
+
+        public PostsModel GetPost(int id)
+        {
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                var post = sqlConnection.Query<PostsModel>("select * from PostsTable where id = @id", id).First();
+                return post;
+            }
+        }
+
+        public IEnumerable<PostsModel> GetPosts()
+        {
+            using (var sqlConnection = MvcApplication.GetOpenConnection())
+            {
+              
+              var  posts = sqlConnection.Query<PostsModel>("select * from PostsTable").ToList();
+                return  posts ;
+            }
+        }
+
+        public void UpdatePost(PostsModel post)
+        {
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
                 
-                dynamicParameters.Add("@LikesNumber", post.LikesNumber);
-                dynamicParameters.Add("@CommentNumber", post.CommentsNumber);
-                await sqlConnection.ExecuteAsync(
-                    "AddPost",
-                    dynamicParameters,
-                    commandType: System.Data.CommandType.StoredProcedure);
-            }
-        }
-
-        public async Task<PostsModel> GetPost(int id)
-        {
-            using (var sqlConnection = new SqlConnection(connectionString))
-            {
-                await sqlConnection.OpenAsync();
-                var dynamicParameters = new DynamicParameters();
-                dynamicParameters.Add("@id", id);
-                return await sqlConnection.QuerySingleOrDefaultAsync<PostsModel>(
-                    "GetPost",
-                    dynamicParameters,
-                    commandType: System.Data.CommandType.StoredProcedure);
-            }
-        }
-
-        public async Task<IEnumerable<PostsModel>> GetPosts()
-        {
-            using (var sqlConnection = new SqlConnection(connectionString))
-            {
-                await sqlConnection.OpenAsync();
-                return await sqlConnection.QueryAsync<PostsModel>(
-                    "GetPosts",
-                    null,
-                    commandType: System.Data.CommandType.StoredProcedure);
-            }
-        }
-
-        public async Task UpdatePost(PostsModel post)
-        {
-            using (var sqlConnection = new SqlConnection(connectionString))
-            {
-                await sqlConnection.OpenAsync();
-                var dynamicParameters = new DynamicParameters();
-                dynamicParameters.Add("@IDauthor", post.Author.IDaccount);
-                dynamicParameters.Add("@Text", post.Text);
-          
-                dynamicParameters.Add("@LikesNumber", post.LikesNumber);
-                dynamicParameters.Add("@CommentNumber", post.CommentsNumber);
-                await sqlConnection.ExecuteAsync(
-                    "UpdatePost",
-                    dynamicParameters,
-                    commandType: System.Data.CommandType.StoredProcedure);
+                sqlConnection.Execute(@"update PostsTable set IDauthor=@IDauthor,Text=@Text,PublicDate=@PublicDate, LikesNumber=@LikesNumber, CommentNumber=@CommentNumber where ID = @id;",
+                  new { post.Author.IDaccount, post.Text, post.PublicDate,post.LikesNumber, post.CommentsNumber, post.IDnews });
             }
         }
     }

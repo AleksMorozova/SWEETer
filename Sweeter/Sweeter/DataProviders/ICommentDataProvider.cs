@@ -10,11 +10,11 @@ namespace Sweeter.DataProviders
 
   public  interface ICommentDataProvider
     {
-        Task<IEnumerable<CommentModel>> GetComments();
+        IEnumerable<CommentModel> GetComments();
 
-        Task<CommentModel> GetComment(int id);
-
-        Task AddComment(CommentModel comment);
-        Task UpdateComment(CommentModel comment);
+       CommentModel GetComment(int id);
+        void DeleteComment(int id);
+        void AddComment(CommentModel comment);
+        void UpdateComment(CommentModel comment);
     }
 }
