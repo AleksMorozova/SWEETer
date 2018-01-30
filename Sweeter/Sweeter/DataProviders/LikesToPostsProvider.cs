@@ -15,9 +15,12 @@ namespace Sweeter.DataProviders
         private SqlConnection sqlConnection;
         public void AddLike(LikesToPostsModel like)
         {
-            sqlConnection.Execute(@"insert into LikesToPostsTable(IDpost,IDauthor)
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Execute(@"insert into LikesToPostsTable(IDpost,IDauthor)
       values (@IDpost,@IDauthor);",
      new { like.Post.IDnews, like.Author.IDaccount });
+            }
         }
 
         public void DeleteLike(int id)
@@ -39,8 +42,11 @@ namespace Sweeter.DataProviders
 
         public IEnumerable<LikesToPostsModel> GetLikes()
         {
-            var likes = sqlConnection.Query<LikesToPostsModel>("select * from LikesToPostsTable").ToList();
-            return likes;
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                var likes = sqlConnection.Query<LikesToPostsModel>("select * from LikesToPostsTable").ToList();
+                return likes;
+            }
         }
     }
 }

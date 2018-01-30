@@ -46,17 +46,21 @@ namespace Sweeter.DataProviders
 
         public IEnumerable<AccountModel> GetAccounts()
         {
-            var accounts = sqlConnection.Query<AccountModel>("select * from AccountTable").ToList();
-            return accounts;
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                var accounts = sqlConnection.Query<AccountModel>("select * from AccountTable").ToList();
+                return accounts;
+            }
         }
 
         public void UpdateAccount(AccountModel account)
         {
-          
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
 
-            sqlConnection.Execute(@"update AccountTable set Fullname=@Fullname, Email=@Email, Password=@Password, Username=@Username, Avatar=@Avatar where ID = @id;",
+                sqlConnection.Execute(@"update AccountTable set Fullname=@Fullname, Email=@Email, Password=@Password, Username=@Username, Avatar=@Avatar where ID = @id;",
               new { account.FullName, account.Email, account.Password, account.Login, account.Avatar, account.IDaccount });
-
+            }
         }
     }
 }

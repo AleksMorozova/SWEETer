@@ -44,8 +44,11 @@ namespace Sweeter.DataProviders
 
         public IEnumerable<LikesToCommentsModel> GetLikes()
         {
-            var likes = sqlConnection.Query<LikesToCommentsModel>("select * from LikesToCommentsTable").ToList();
-            return likes;
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                var likes = sqlConnection.Query<LikesToCommentsModel>("select * from LikesToCommentsTable").ToList();
+                return likes;
+            }
         }
     }
 }
