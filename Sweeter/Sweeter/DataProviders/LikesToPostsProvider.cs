@@ -17,9 +17,9 @@ namespace Sweeter.DataProviders
         {
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                sqlConnection.Execute(@"insert into LikesToPostsTable(IDpost,IDauthor)
-      values (@IDpost,@IDauthor);",
-     new { like.Post.IDnews, like.Author.IDaccount });
+                sqlConnection.Execute(@"insert into LikesToPostTable(IDuser,IDpost)
+      values (@IDauthor,@IDpost);",
+     new {  like.Author.IDaccount, like.Post.IDnews });
             }
         }
 
@@ -27,7 +27,7 @@ namespace Sweeter.DataProviders
         {
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                sqlConnection.Execute(@"delete from LikesToPostsTable where id = @id", id);
+                sqlConnection.Execute(@"delete from LikesToPostTable where IDus_post = @id", id);
             }
         }
 
@@ -35,7 +35,7 @@ namespace Sweeter.DataProviders
         {
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                var like = sqlConnection.Query<LikesToPostsModel>("select * from LikesToPostsTable where Id = @id", id).First();
+                var like = sqlConnection.Query<LikesToPostsModel>("select * from LikesToPostTable where IDus_post = @id", id).First();
                 return like;
             }
         }
@@ -44,7 +44,7 @@ namespace Sweeter.DataProviders
         {
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                var likes = sqlConnection.Query<LikesToPostsModel>("select * from LikesToPostsTable").ToList();
+                var likes = sqlConnection.Query<LikesToPostsModel>("select * from LikesToPostTable").ToList();
                 return likes;
             }
         }

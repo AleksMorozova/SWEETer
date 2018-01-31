@@ -21,7 +21,7 @@ namespace Sweeter.DataProviders
             post.PublicDate = DateTime.Now;
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                sqlConnection.Execute(@"insert into PostsTable(IDauthor,Text,PublicDate, LikesNumber, CommentNumber)
+                sqlConnection.Execute(@"insert into PostTable(IDuser,Text,PublicDate, LikeNumber, CommentNumber)
       values (@IDauthor,@Text,@PublicDate, @LikesNumber, @CommentNumber);",
    new { post.Author.IDaccount, post.Text, post.PublicDate, post.LikesNumber, post.CommentsNumber });
              
@@ -31,7 +31,7 @@ namespace Sweeter.DataProviders
         {
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                sqlConnection.Execute(@"delete from PostsTable where id = @id", id);
+                sqlConnection.Execute(@"delete from PostTable where IDpost = @id", id);
             }
         }
 
@@ -39,7 +39,7 @@ namespace Sweeter.DataProviders
         {
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                var post = sqlConnection.Query<PostsModel>("select * from PostsTable where id = @id", id).First();
+                var post = sqlConnection.Query<PostsModel>("select * from PostTable where IDpost = @id", id).First();
                 return post;
             }
         }
@@ -49,7 +49,7 @@ namespace Sweeter.DataProviders
             using (var sqlConnection = MvcApplication.GetOpenConnection())
             {
               
-              var  posts = sqlConnection.Query<PostsModel>("select * from PostsTable").ToList();
+              var  posts = sqlConnection.Query<PostsModel>("select * from PostTable").ToList();
                 return  posts ;
             }
         }
@@ -59,7 +59,7 @@ namespace Sweeter.DataProviders
             using (var sqlConnection = new SqlConnection(connectionString))
             {
                 
-                sqlConnection.Execute(@"update PostsTable set IDauthor=@IDauthor,Text=@Text,PublicDate=@PublicDate, LikesNumber=@LikesNumber, CommentNumber=@CommentNumber where ID = @id;",
+                sqlConnection.Execute(@"update PostTable set IDuser=@IDauthor,Text=@Text,PublicDate=@PublicDate, LikeNumber=@LikesNumber, CommentNumber=@CommentNumber where IDpost = @id;",
                   new { post.Author.IDaccount, post.Text, post.PublicDate,post.LikesNumber, post.CommentsNumber, post.IDnews });
             }
         }

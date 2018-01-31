@@ -19,7 +19,7 @@ namespace Sweeter.DataProviders
         {
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                sqlConnection.Execute(@"insert into AccountTable(Fullname, Email, Password, Username, Avatar)
+                sqlConnection.Execute(@"insert into AccountTable(Name, Email, Password, Username, Avatar)
       values (@Fullname, @Email, @Password, @Username, @Avatar);",
     new { account.FullName, account.Email, account.Password, account.Login, account.Avatar });
            
@@ -31,7 +31,7 @@ namespace Sweeter.DataProviders
         {
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                sqlConnection.Execute(@"delete from AccountTable where id = @id", id);
+                sqlConnection.Execute(@"delete from AccountTable where IDuser = @id", id);
             }
         }
 
@@ -39,7 +39,7 @@ namespace Sweeter.DataProviders
         {
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                var account = sqlConnection.Query<AccountModel>("select * from AccountTable where Id = @id", id).First();
+                var account = sqlConnection.Query<AccountModel>("select * from AccountTable where IDuser = @id", id).First();
                 return account;
             }
         }

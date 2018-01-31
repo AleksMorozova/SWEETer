@@ -20,7 +20,7 @@ namespace Sweeter.DataProviders
         {
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                sqlConnection.Execute(@"insert into CommentTable(IDpost, IDauthor,Text, LikesNumber)
+                sqlConnection.Execute(@"insert into CommentTable(IDpost, IDuser,Text, LikeNumber)
       values (@IDpost, @IDauthor,@Text, @LikesNumber);",
  new { comment.Post.IDnews, comment.Author.IDaccount, comment.Text, comment.LikesNumber });
             }
@@ -30,7 +30,7 @@ namespace Sweeter.DataProviders
         {
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                var comment = sqlConnection.Query<CommentModel>("select * from CommentTable where Id = @id", id).First();
+                var comment = sqlConnection.Query<CommentModel>("select * from CommentTable where IDcomment = @id", id).First();
                 return comment;
             }
         }
@@ -48,8 +48,8 @@ namespace Sweeter.DataProviders
         {
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                sqlConnection.Execute(@"update CommentTable set IDpost=@IDpost, IDauthor=@IDauthor,Text=@Text, LikesNumber=@LikesNumber where ID = @id;",
-                  new { comment.Post.IDnews,comment.Author.IDaccount,comment.Text,comment.LikesNumber });
+                sqlConnection.Execute(@"update CommentTable set IDpost=@IDpost, IDuser=@IDauthor,Text=@Text, LikeNumber=@LikesNumber where IDcomment = @id;",
+                  new { comment.Post.IDnews,comment.Author.IDaccount,comment.Text,comment.LikesNumber, comment.IDcomment });
             }
         }
 
@@ -57,7 +57,7 @@ namespace Sweeter.DataProviders
         {
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                sqlConnection.Execute(@"delete from CommentTable where id = @id", id);
+                sqlConnection.Execute(@"delete from CommentTable where IDcomment = @id", id);
             }
         }
     }
