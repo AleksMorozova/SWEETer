@@ -1,4 +1,16 @@
-﻿function checkpass() {
+﻿document.addEventListener('keydown', function (event) {
+    var caps = event.getModifierState && event.getModifierState('CapsLock');
+    var alertcaps = document.getElementById('caps');
+    if (caps) {
+        alertcaps.innerText = 'CapsLock in ON';
+    }
+    else {
+        alertcaps.innerText = '';
+    }
+    // true when you press the keyboard CapsLock key
+});
+
+function checkpass() {
     var pas = document.getElementById("password");
     var pas2 = document.getElementById("password2");
     var ermes = document.getElementById('error');
@@ -12,7 +24,7 @@
     }
     else if (!regexp.test(pas.value)) { // characters in password 1
         pas.classList.add("notright");
-        ermes.innerText = "This password contains not allowed characters.";
+        ermes.innerText = "This password is not allowed! Please, use only letters of English alphabet and numbers.";
         pas2.classList.remove("notright");
         pas2.value = "";
         pas2.disabled = true; 
