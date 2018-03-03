@@ -117,6 +117,7 @@ select:focus
 .addpost {
     width: 20%;
     display: inline-block;
+    padding: 0%;
     float: right;
     margin-right: 1%;
     margin-bottom: 1%;
@@ -545,7 +546,6 @@ hr
 }
 .comment
 {
-    background-image: url(/lib/img/comment.png) ;
     vertical-align: middle;
     width: 5%;
     display: inline-block;

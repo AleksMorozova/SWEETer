@@ -52,7 +52,7 @@
                     <textarea class="mobilemypost" name="mypost" id="mypost" rows="2" placeholder="What are you thinking about..."
                               onKeyDown="limitTextPost(addpostmob, CounterOfLettersMob, this, 216);"
                               onKeyUp="limitTextPost(addpostmob, CounterOfLettersMob, this, 216);"></textarea>
-                    <input type="submit" class="mobileaddpost" name="addpost" id="addpost" value="Send">
+                    <input type="submit" class="mobileaddpost" name="addpost" id="addpostmob" value="Send">
                     <hr style="border-color:rgba(0,0,0,0.6)">
 
                     <div class="mobilesignout">
@@ -96,13 +96,13 @@
                 <input type="submit" class="addpost" name="addpost" id="addpost" value="Send">
             </form>
             @if (ViewData["ViewSortLike"].ToString() == "Show")
-    {
+             {
         <button class="btn mobileaddpost mobile" onclick="location.href='@Url.Action("Comments", "Comment", new { id = ViewData["ID"], SortLike = true })'">Sort by <b>likes</b></button>
-}
-else
-{
+            }
+            else
+            {
         <button class="btn mobileaddpost mobile" onclick="location.href='@Url.Action("Comments", "Comment", new { id = ViewData["ID"] })'">Sort by <b>date</b></button>
-}
+            }
             <hr class="line" style="margin-top:1.5%;margin-bottom:1.5%">
             <div id="wall">
                 @foreach (CommentModel comment in Model)

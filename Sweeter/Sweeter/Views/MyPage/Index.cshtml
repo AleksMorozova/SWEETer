@@ -79,7 +79,7 @@
                     <textarea class="mobilemypost" name="mypost" id="mypost" rows="2" placeholder="What are you thinking about..."
                               onKeyDown="limitTextPost(addpostmob, CounterOfLettersMob, this, 216);"
                               onKeyUp="limitTextPost(addpostmob, CounterOfLettersMob, this, 216);"></textarea>
-                    <button type="button" class=" btn mobileaddpost" data-toggle="modal" data-target="#myMobileModal" name="addpost" id="addpost">Send</button>
+                    <button type="button" class=" btn mobileaddpost" data-toggle="modal" data-target="#myMobileModal" name="addpost" id="addpostmob">Send</button>
                     <hr style="border-color:rgba(0,0,0,0.6)">
 
                     <div class="mobilesignout">
@@ -196,7 +196,7 @@
                             @post.LikeNumder
                         </label>
                     </div>
-                    <span><img src="~/lib/img/_@ViewData["Style"]/comment.png" onclick="location.href='@Url.Action("Comments","Comment", new { id=post.IDpost})' " class="comment" /></span>
+                    <span><img src="lib/img/_@ViewData["Style"]/comment.png" onclick="location.href='@Url.Action("Comments","Comment", new { id=post.IDpost})' " class="comment" /></span>
                     <div class="commentcontainer">
                         <label class="commentlabel">
                             @post.CommentNumber
