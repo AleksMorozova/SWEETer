@@ -193,7 +193,7 @@
             <hr class="line" style="margin-top:1.5%;margin-bottom:1.5%">
             <div id="wall">
                 @foreach (PostsModel post in Model)
-        {
+    {
             <form id="post_@post.IDpost">
                 <label class="lab auser" style="margin:1%" onclick="location.href='@Url.Action("GetUser","User", new { idUs=post.IDuser})' ">
                     @post.Author.Username
@@ -201,7 +201,7 @@
                 <label class="lab auser componly" style="margin:1%" onclick="location.href='@Url.Action("Index","Posts",new { CatID=post.IDCategory})'">| @post.Category.Category | </label>
                 <label class="lab auser componly" style="margin:1%">@post.PublicDate</label>
                 @if (post.Author.Username.Equals(ViewData["Username"]))
-        {
+    {
             <button type="button" class="DeleteButton" data-id="@post.IDpost">X</button>
 }
                 <hr id="post_@post.IDpost">
@@ -269,6 +269,7 @@
             });
         });
                 </script>
+                <p style="margin-bottom:10%;"> </p>
             </div>
         </div>
 

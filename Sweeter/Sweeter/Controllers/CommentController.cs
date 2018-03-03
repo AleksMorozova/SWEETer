@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Sweeter.DataProviders;
 using Sweeter.Models;
+using Sweeter.Services.DataProviders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +18,15 @@ namespace Sweeter.Controllers
         private ICommentDataProvider commentDataProvider;
         private IPostDataProvider postDataProvider;
         private ILikesToCommentsProvider likesToCommentsProvider;
+        private ICategoriesDataProvider categoriesDataProvider; 
         private ILogger<CommentController> _logger;
 
-        public CommentController(IPostDataProvider postData, IAccountDataProvider accountData, ICommentDataProvider commentData, ILogger<CommentController> logger, ILikesToCommentsProvider likesToCommentsProvider)
+        public CommentController(IPostDataProvider postData, IAccountDataProvider accountData, ICommentDataProvider commentData, ILogger<CommentController> logger, ILikesToCommentsProvider likesToCommentsProvider, ICategoriesDataProvider categoriesDataProvider)
         {
             this.postDataProvider = postData;
             this.accountDataProvider = accountData;
             this.commentDataProvider = commentData;
+            this.categoriesDataProvider = categoriesDataProvider;
             _logger = logger;
             this.likesToCommentsProvider = likesToCommentsProvider;
         }
@@ -53,6 +56,7 @@ namespace Sweeter.Controllers
                 ViewData["PostComment"] = post.CommentNumber;
                 ViewData["ID"] = id;
                 ViewData["ViewSortLike"] = "Show";
+                ViewData["Category"] = categoriesDataProvider.GetCategoryByID(post.IDCategory).Category;
                 IEnumerable<CommentModel> comments = commentDataProvider.GetCommentsOfPost(id);
                 AccountModel Author = accountDataProvider.GetAccount(post.IDuser);
                 post.CommentNumber = comments.Count();
