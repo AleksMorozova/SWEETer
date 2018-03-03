@@ -48,7 +48,10 @@
             <div class="addfeedmobile" id="Addfeed">
                 <form action="Comment/addcomment" method="post" class="addfeedformmobile">
                     <input type="hidden" value="@ViewData["ID"]" name="id" />
-                    <textarea class="mobilemypost" name="mypost" id="mypost" rows="2" placeholder="What are you thinking about..."></textarea>
+                    <p class="HideText" id="CounterOfLettersMob">The number of characters left: 6^3</p>
+                    <textarea class="mobilemypost" name="mypost" id="mypost" rows="2" placeholder="What are you thinking about..."
+                              onKeyDown="limitTextPost(addpostmob, CounterOfLettersMob, this, 216);"
+                              onKeyUp="limitTextPost(addpostmob, CounterOfLettersMob, this, 216);"></textarea>
                     <input type="submit" class="mobileaddpost" name="addpost" id="addpost" value="Send">
                     <hr style="border-color:rgba(0,0,0,0.6)">
 
@@ -87,7 +90,9 @@
                 <input type="hidden" value="@ViewData["ID"]" name="id" />
                 <label class="lab" style="margin:1%">Publish your comment, @ViewData["Username"]</label>
                 <hr>
-                <textarea class="mypost" name="mypost" id="mypost" rows="2" placeholder="What are you thinking about..."></textarea>
+                <textarea class="mypost" name="mypost" id="mypost" rows="2" placeholder="What are you thinking about..." onKeyDown="limitTextPost(addpost, CounterOfLetters, this, 216);"
+                          onKeyUp="limitTextPost(addpost, CounterOfLetters, this, 216);"></textarea>
+                <label class="lab" style="margin:1%" id="CounterOfLetters">The number of characters left: 6^3</label>
                 <input type="submit" class="addpost" name="addpost" id="addpost" value="Send">
             </form>
             @if (ViewData["ViewSortLike"].ToString() == "Show")

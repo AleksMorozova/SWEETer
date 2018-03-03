@@ -15,3 +15,16 @@ window.onload = function () {
         show.classList.add('hidden');
     }
 }
+function limitTextPost(button, counter, limitField, limitNum) {
+    var diff = limitNum - limitField.value.length;
+    if (diff < 0) {
+
+        counter.innerText = "The number of characters left: " + diff;
+        button.disabled = true;
+    }
+    else
+    {
+        counter.innerText = "The number of characters lefts: " + diff;
+        button.disabled = false;
+    }
+}

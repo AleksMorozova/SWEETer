@@ -74,42 +74,45 @@
             <!--Mobile Menu-->
             <div class="addfeedmobile" id="Addfeed">
                 <form method="post" action="Posts/addfeed" class="addfeedformmobile">
-                    <textarea class="mobilemypost" name="mypost" id="mypost" rows="2" placeholder="What are you thinking about..."></textarea>
-                    <button type="button" class=" btn mobileaddpost" data-toggle="modal" data-target="#myMobileModal" name="addpost" id="addpost">Send</button>
-                    <hr style="border-color:rgba(0,0,0,0.6)">
-                    <div class="mobilesignout">
-                        <button type="button" class="mobilenavbutton" onclick="location.href='@Url.Action("Logout","LogOut")' ">Sign out</button>
-                    </div>
-                    <div class="mobilemypage">
-                        <button type="button" class="mobilenavbutton" onclick="location.href='@Url.Action("Index","MyPage")' ">My Page</button>
-                    </div>
-                    <div class="mobilefeeds">
-                        <button type="button" class="mobilenavbutton" onclick="location.href='@Url.Action("Index","Posts")' ">Feeds</button>
-                    </div>
-                    <div class="modal " style="margin-top:18%;" data-backdrop="false" id="myMobileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content" style="margin-bottom:2%;">
-                                <div class="modal-header">
-                                    <h4 class="modal-title" id="exampleModalLongTitle">Choose the category</h4>
-                                    <h4 class="modal-title" id="exampleModalLongTitle">If you choose nothing, "flood" would be chosen</h4>
-                                </div>
-                                <div class="modal-body" style="text-align:center;">
-                                    <select size="13" name="category" id="Style" class="select">
-                                        @foreach (CategoriesModel cats in (List<CategoriesModel>)ViewData["categories"])
-                                        {
-                                    <option style="font-size:16px;" value="@cats.Category"> @cats.Category</option>
-                                        }
-                                    </select>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <input type="submit" class="btn btn-primary" value="Send post">
+                    <p class="HideText" id="CounterOfLettersMob">The number of characters left: 6^3</p>
+                        <textarea class="mobilemypost" name="mypost" id="mypost" rows="2" placeholder="What are you thinking about..." 
+                            onKeyDown="limitTextPost(addpostmob, CounterOfLettersMob, this, 216);" 
+                            onKeyUp="limitTextPost(addpostmob, CounterOfLettersMob, this, 216);"></textarea>
+                        <button type="button" class=" btn mobileaddpost" data-toggle="modal" data-target="#myMobileModal" name="addpost" id="addpostmob">Send</button>
+                        <hr style="border-color:rgba(0,0,0,0.6)">
+                        <div class="mobilesignout">
+                            <button type="button" class="mobilenavbutton" onclick="location.href='@Url.Action("Logout","LogOut")' ">Sign out</button>
+                        </div>
+                        <div class="mobilemypage">
+                            <button type="button" class="mobilenavbutton" onclick="location.href='@Url.Action("Index","MyPage")' ">My Page</button>
+                        </div>
+                        <div class="mobilefeeds">
+                            <button type="button" class="mobilenavbutton" onclick="location.href='@Url.Action("Index","Posts")' ">Feeds</button>
+                        </div>
+                        <div class="modal " style="margin-top:18%;" data-backdrop="false" id="myMobileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="margin-bottom:2%;">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="exampleModalLongTitle">Choose the category</h4>
+                                        <h4 class="modal-title" id="exampleModalLongTitle">If you choose nothing, "flood" would be chosen</h4>
+                                    </div>
+                                    <div class="modal-body" style="text-align:center;">
+                                        <select size="13" name="category" id="Style" class="select">
+                                            @foreach (CategoriesModel cats in (List<CategoriesModel>)ViewData["categories"])
+                        {
+                            <option style="font-size:16px;" value="@cats.Category"> @cats.Category</option>
+    }
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <input type="submit" class="btn btn-primary" value="Send post">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                </form>
+</form>
             </div>
             <div class="addfeedmobile hidebutton" id="HideForm">
                 <p class="HideText">Hide addpost form</p>
@@ -129,7 +132,9 @@
             <form action="Posts/addfeed" method="post" class="addfeedform">
                 <label class="lab" style="margin:1%">Publish your post, @ViewData["Username"]</label>
                 <hr>
-                <textarea class="mypost" name="mypost" id="mypost" rows="2" placeholder="What are you thinking about..."></textarea>
+                <textarea class="mypost" name="mypost" id="mypost" rows="2" placeholder="What are you thinking about..." onKeyDown="limitTextPost(addpost, CounterOfLetters, this, 216);"
+                          onKeyUp="limitTextPost(addpost, CounterOfLetters, this, 216);"></textarea>
+                <label class="lab" style="margin:1%" id="CounterOfLetters">The number of characters left: 6^3</label>
                 <button type="button" class="btn addpost" name="addpost" id="addpost" data-toggle="modal" data-target="#myModal">Send</button>
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -141,9 +146,9 @@
                             <div class="modal-body" style="text-align:center;">
                                 <select size="13" name="category" id="Style" class="select">
                                     @foreach (CategoriesModel cats in (List<CategoriesModel>)ViewData["categories"])
-                            {
-                                <option value="@cats.Category">  <h4>@cats.Category</h4></option>
-                    }
+                        {
+                            <option value="@cats.Category">  <h4>@cats.Category</h4></option>
+            }
                                 </select>
                             </div>
                             <div class="modal-footer">

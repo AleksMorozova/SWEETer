@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/lib/src/style_@ViewData["Style"] .css">
     <link rel="icon" type="image/png" href="~/lib/img/logo.png">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
         $(window).scroll(function () {
@@ -36,6 +37,7 @@
     </script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="~/js/site.js"></script>
+
     <link rel="shortcut icon" href="~/lib/img/logo.png" type="image/png">
     <title>My Page</title>
 </head>
@@ -73,8 +75,12 @@
             <!--Add Post Mobile-->
             <div class="addfeedmobile" id="Addfeed">
                 <form action="MyPage/addfeed" method="post" class="addfeedformmobile">
-                    <textarea class="mobilemypost" name="mypost" id="mypost" rows="2" placeholder="What are you thinking about..."></textarea>
-                    <button type="button" class=" btn mobileaddpost" data-toggle="modal" data-target="#myMobileModal" name="addpost" id="addpost">Send</button>                    <hr style="border-color:rgba(0,0,0,0.6)">
+                    <p class="HideText" id="CounterOfLettersMob">The number of characters left: 6^3</p>
+                    <textarea class="mobilemypost" name="mypost" id="mypost" rows="2" placeholder="What are you thinking about..."
+                              onKeyDown="limitTextPost(addpostmob, CounterOfLettersMob, this, 216);"
+                              onKeyUp="limitTextPost(addpostmob, CounterOfLettersMob, this, 216);"></textarea>
+                    <button type="button" class=" btn mobileaddpost" data-toggle="modal" data-target="#myMobileModal" name="addpost" id="addpost">Send</button>
+                    <hr style="border-color:rgba(0,0,0,0.6)">
 
                     <div class="mobilesignout">
                         <button type="button" class="mobilenavbutton" onclick="location.href='@Url.Action("Logout","LogOut")'">Sign out</button>
@@ -95,9 +101,9 @@
                                 <div class="modal-body" style="text-align:center;">
                                     <select size="13" name="category" id="Style" class="select">
                                         @foreach (CategoriesModel cats in (List<CategoriesModel>)ViewData["categories"])
-                                {
-                                    <option style="font-size:16px;" value="@cats.Category"> @cats.Category</option>
-                        }
+                        {
+                            <option style="font-size:16px;" value="@cats.Category"> @cats.Category</option>
+        }
                                     </select>
                                 </div>
                                 <div class="modal-footer">
@@ -132,7 +138,9 @@
             <form action="MyPage/addfeed" method="post" class="addfeedform">
                 <label class="lab" style="margin:1%">Publish your post, @ViewData["UserName"]</label>
                 <hr>
-                <textarea class="mypost" name="mypost" id="mypost" rows="2" placeholder="What are you thinking about..."></textarea>
+                <textarea class="mypost" name="mypost" id="mypost" rows="2" placeholder="What are you thinking about..." onKeyDown="limitTextPost(addpost, CounterOfLetters, this, 216);"
+                          onKeyUp="limitTextPost(addpost, CounterOfLetters, this, 216);"></textarea>
+                <label class="lab" style="margin:1%" id="CounterOfLetters">The number of characters left: 6^3</label>
                 <button type="button" class="btn addpost" name="addpost" id="addpost" data-toggle="modal" data-target="#myModal">Add post</button>
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -146,9 +154,9 @@
 
                                 <select size="13" name="category" id="Style" class="select">
                                     @foreach (CategoriesModel cats in (List<CategoriesModel>)ViewData["categories"])
-                            {
-                                <option value="@cats.Category">  @cats.Category</option>
-                    }
+                        {
+                            <option value="@cats.Category">  @cats.Category</option>
+            }
                                 </select>
                             </div>
                             <div class="modal-footer">
