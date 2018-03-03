@@ -29,7 +29,7 @@ namespace Sweeter.Controllers
             this._logger = logger;
         }
         // GET: /<controller>/
-        public IActionResult Index()
+        public IActionResult Index(string error)
         {
             int id;
             if (HttpContext.User.Claims.Count() != 0)
@@ -40,22 +40,28 @@ namespace Sweeter.Controllers
                 id = 0;
             if (id == 0)
             {
+                if (error != null)
+                    ViewData["Error"] = error;
+                else ViewData["Error"] = "";
                 return View();
-           }
-           else return Redirect("/posts");
+            }
+            else return Redirect("/posts");
         }
+
 
         [HttpPost]
         public async Task<IActionResult> OnPostAsync(string email, string password, string Persistent)
         {
             if (ModelState.IsValid)
             {
+
                 var user = await AuthenticateUser(email, password);
 
                 if (user == null)
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return RedirectToAction("Index", "Index");
+                    ViewData["Error"] = "Data is incorrect. Try once more";
+                    return RedirectToAction("Index", new { error = "Data is incorrect. Try once more" });
                 }
 
                 AccountModel account = accountDataProvider.GetAccountByEmail(user.Email);
@@ -91,10 +97,11 @@ namespace Sweeter.Controllers
                 }
 
                 _logger.LogInformation($"User {account.IDuser} successful login with Email {account.Email}");
-                return RedirectToAction("Index", "Posts");
+                return Redirect("/posts");
             }
             _logger.LogInformation($"Model is not valid");
-            return RedirectToAction("Index", "Login");
+
+            return RedirectToAction("Index", new { error = "Data is incorrect. Try once more" });
         }
 
         private async Task<AccountModel> AuthenticateUser(string email, string password)

@@ -42,9 +42,10 @@ namespace Sweeter
               .AddCookie(options => {
                   options.CookieName = "Current";
               });
+            services.AddResponseCompression();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSingleton<IEmailConfiguration>(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
-            services.AddTransient<IEmailService, EmailService>();
+          //  services.AddSingleton<IEmailConfiguration>(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
+         //   services.AddTransient<IEmailService, EmailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +56,7 @@ namespace Sweeter
             app.UseStaticFiles();
        
             app.UseAuthentication();
+            app.UseResponseCompression();
             app.UseMvc();
         }
     }

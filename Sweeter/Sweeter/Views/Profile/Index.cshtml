@@ -15,7 +15,7 @@
     <link rel="icon" type="image/png" href="~/lib/img/logo.png">
     <link rel="shortcut icon" href="~/lib/img/logo.png" type="image/png">
 
-    <script src="~/js/require.js"></script>
+   
     <script type="text/javascript" src="~/js/ProfilePageScripts.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -60,7 +60,7 @@
                     <p><input type="text" name="name" class="textin" id="name" oninput="checkfullname()" value=@Model.Name>
                     <p><label for="about" style="text-align:center">Tell me about yourself</label>
                     <p>
-                        <textarea type="text" style="width: 77%" rows="5" id="about" name="about" class="textareain" value=@Model.About onKeyDown="limitText(this,300);"
+                        <textarea type="text" style="width: 77%;; resize:none;" rows="5" id="about" name="about" class="textareain" value=@Model.About onKeyDown="limitText(this,300);"
                                   onKeyUp="limitText(this,300);">@Model.About</textarea>
                         
                         <!--Second part-->
