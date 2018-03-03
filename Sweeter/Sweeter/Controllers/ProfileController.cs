@@ -71,6 +71,8 @@ namespace Sweeter.Controllers
             {
                 if (password == null)
                 {
+                    if ((Faccount.Style != "Black") && (Faccount.Style != "Green") && (Faccount.Style != "Violet") && (Faccount.Style != "Blue") && (Faccount.Style != "LightViolet"))
+                        Faccount.Style = "Green";
                     AccountModel Oldaccount = accountDataProvider.GetAccount(id);
                     if (Faccount.Style == null) Faccount.Style = Oldaccount.Style;
                     AccountModel account = new AccountModel
