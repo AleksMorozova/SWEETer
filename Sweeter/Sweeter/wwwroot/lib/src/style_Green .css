@@ -114,18 +114,20 @@ select:focus
 	margin-bottom:1%;
 	resize:none;
 }
-.addpost
-{
-	width:20%;
-	margin-left:77%;
-	margin-bottom:1%;
-	background-color:rgba(0,184,43,0.5);
-	border-color:rgba(0,184,43,0.5);
-	border-width:1px;
-	font-family:Comic Sans MS;
-    font-size:20px;
-    color:rgba(0,0,0,0.6);
-    border-radius:5px;
+.addpost {
+    width: 20%;
+    display: inline-block;
+    padding: 0%;
+    float: right;
+    margin-right: 1%;
+    margin-bottom: 1%;
+    background-color: rgba(0,184,43,0.5);
+    border-color: rgba(0,184,43,0.5);
+    border-width: 1px;
+    font-family: Comic Sans MS;
+    font-size: 20px;
+    color: rgba(0,0,0,0.6);
+    border-radius: 5px;
 }
 .mobilemypost
 {
@@ -544,7 +546,6 @@ hr
 }
 .comment
 {
-    background-image: url(/lib/img/comment.png) ;
     vertical-align: middle;
     width: 5%;
     display: inline-block;

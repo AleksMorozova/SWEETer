@@ -77,10 +77,11 @@ button:focus
 	margin-bottom:1%;
 	resize:none;
 }
-.addpost
-{
+.addpost {
     width: 20%;
-    margin-left: 77%;
+    display: inline-block;
+    float: right;
+    margin-right: 1%;
     margin-bottom: 1%;
     background-color: rgba(191, 133, 248,0.5);
     border-color: rgba(191, 133, 248,0.5);
@@ -556,7 +557,6 @@ hr
 }
 .comment
 {
-    background-image: url(/lib/img/comment.png) ;
     vertical-align: middle;
     width: 5%;
     display: inline-block;

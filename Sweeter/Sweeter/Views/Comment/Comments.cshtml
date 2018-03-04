@@ -48,8 +48,11 @@
             <div class="addfeedmobile" id="Addfeed">
                 <form action="Comment/addcomment" method="post" class="addfeedformmobile">
                     <input type="hidden" value="@ViewData["ID"]" name="id" />
-                    <textarea class="mobilemypost" name="mypost" id="mypost" rows="2" placeholder="What are you thinking about..."></textarea>
-                    <input type="submit" class="mobileaddpost" name="addpost" id="addpost" value="Send">
+                    <p class="HideText" id="CounterOfLettersMob">The number of characters left: 6^3</p>
+                    <textarea class="mobilemypost" name="mypost" id="mypost" rows="2" placeholder="What are you thinking about..."
+                              onKeyDown="limitTextPost(addpostmob, CounterOfLettersMob, this, 216);"
+                              onKeyUp="limitTextPost(addpostmob, CounterOfLettersMob, this, 216);"></textarea>
+                    <input type="submit" class="mobileaddpost" name="addpost" id="addpostmob" value="Send">
                     <hr style="border-color:rgba(0,0,0,0.6)">
 
                     <div class="mobilesignout">
@@ -87,17 +90,19 @@
                 <input type="hidden" value="@ViewData["ID"]" name="id" />
                 <label class="lab" style="margin:1%">Publish your comment, @ViewData["Username"]</label>
                 <hr>
-                <textarea class="mypost" name="mypost" id="mypost" rows="2" placeholder="What are you thinking about..."></textarea>
+                <textarea class="mypost" name="mypost" id="mypost" rows="2" placeholder="What are you thinking about..." onKeyDown="limitTextPost(addpost, CounterOfLetters, this, 216);"
+                          onKeyUp="limitTextPost(addpost, CounterOfLetters, this, 216);"></textarea>
+                <label class="lab" style="margin:1%" id="CounterOfLetters">The number of characters left: 6^3</label>
                 <input type="submit" class="addpost" name="addpost" id="addpost" value="Send">
             </form>
             @if (ViewData["ViewSortLike"].ToString() == "Show")
-    {
+             {
         <button class="btn mobileaddpost mobile" onclick="location.href='@Url.Action("Comments", "Comment", new { id = ViewData["ID"], SortLike = true })'">Sort by <b>likes</b></button>
-}
-else
-{
+            }
+            else
+            {
         <button class="btn mobileaddpost mobile" onclick="location.href='@Url.Action("Comments", "Comment", new { id = ViewData["ID"] })'">Sort by <b>date</b></button>
-}
+            }
             <hr class="line" style="margin-top:1.5%;margin-bottom:1.5%">
             <div id="wall">
                 @foreach (CommentModel comment in Model)
